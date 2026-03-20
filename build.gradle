@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.13.+'
+	id "net.fabricmc.fabric-loom" version "${loom_version}"
 	id 'maven-publish'
 	id 'checkstyle'
 }
@@ -21,23 +21,23 @@ sourceSets {
 	}
 }
 
-loom {
-	createRemapConfigurations(sourceSets.testMod)
-
-	runs {
-		testModClient {
-			client()
-			name = 'Test Mod Client'
-			source sourceSets.testMod
-		}
-
-		testModServer {
-			server()
-			name = 'Test Mod Server'
-			source sourceSets.testMod
-		}
-	}
-}
+//loom {
+////	createRemapConfigurations(sourceSets.testMod)
+//
+//	runs {
+//		testModClient {
+//			client()
+//			name = 'Test Mod Client'
+//			source sourceSets.testMod
+//		}
+//
+//		testModServer {
+//			server()
+//			name = 'Test Mod Server'
+//			source sourceSets.testMod
+//		}
+//	}
+//}
 
 repositories {
 	mavenLocal()
@@ -57,8 +57,7 @@ repositories {
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings loom.officialMojangMappings()
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	// True: module classes are used in public API classes/methods/fields
 	def fabricApiModules = [
@@ -70,27 +69,23 @@ dependencies {
 	]
 	fabricApiModules.forEach { module, api ->
 		def dependency = fabricApi.module(module, project.fabric_version)
+		implementation dependency
 
-		if (api) {
-			modApi dependency
-		} else {
-			modImplementation dependency
-		}
 	}
 
-	modImplementation "io.github.cottonmc:Jankson-Fabric:${project.jankson_version}"
+	implementation "io.github.cottonmc:Jankson-Fabric:${project.jankson_version}"
 	include "io.github.cottonmc:Jankson-Fabric:${project.jankson_version}"
 
 	include api("io.github.juuxel:libninepatch:${project.libninepatch_version}")
 
-	modCompileOnly("com.terraformersmc:modmenu:$project.modmenu_version") {
+	compileOnly("com.terraformersmc:modmenu:$project.modmenu_version") {
 		exclude group: 'net.fabricmc.fabric-api'
 		exclude group: 'net.fabricmc', module: 'fabric-loader'
 	}
 
 	// Test mod dependencies
-	testModImplementation sourceSets.main.output
-	modTestModImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	testImplementation sourceSets.main.output
+	testImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	// modTestModRuntimeOnly("com.terraformersmc:modmenu:$project.modmenu_version") {
 	// 	exclude group: 'net.fabricmc.fabric-api'
 	// 	exclude group: 'net.fabricmc', module: 'fabric-loader'
@@ -109,8 +104,8 @@ java {
 	withSourcesJar()
 	withJavadocJar()
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
 }
 
 tasks.withType(JavaCompile) {
@@ -118,7 +113,7 @@ tasks.withType(JavaCompile) {
 	// this fixes some edge cases with special characters not displaying correctly
 	// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 	options.encoding = "UTF-8"
-	options.release = 21
+	options.release = 25
 }
 
 jar {
@@ -141,7 +136,6 @@ javadoc {
 	dependsOn javadocBuildJar
 
 	options {
-		links "https://maven.fabricmc.net/docs/yarn-$project.yarn_mappings"
 		links 'https://javadoc.io/doc/org.jetbrains/annotations/19.0.0'
 		taglets 'io.github.cottonmc.cotton.gui.jd.ExperimentalTaglet',
 				'io.github.cottonmc.cotton.gui.jd.PropertyTaglet'

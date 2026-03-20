@@ -15,7 +15,7 @@ import io.github.cottonmc.cotton.gui.networking.ScreenNetworking;
 import io.github.cottonmc.cotton.gui.widget.WPanel;
 import io.github.cottonmc.cotton.gui.widget.WWidget;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -28,6 +28,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
  * A screen for a {@link SyncedGuiDescription}.
@@ -60,12 +62,10 @@ public class CottonInventoryScreen<T extends SyncedGuiDescription> extends Abstr
 	 * @since 5.2.0
 	 */
 	public CottonInventoryScreen(T description, Inventory inventory, Component title) {
-		super(description, inventory, title);
+		super(description, inventory, title, 18*9, 18*9);
 		this.description = description;
 		width = 18*9;
 		height = 18*9;
-		this.imageWidth = 18*9;
-		this.imageHeight = 18*9;
 		description.getRootPanel().validate(description);
 	}
 
@@ -112,7 +112,7 @@ public class CottonInventoryScreen<T extends SyncedGuiDescription> extends Abstr
 
 		if (root != null) {
 			GuiEventListener rootPanelElement = FocusElements.ofPanel(root);
-			((ScreenAccessor) this).libgui$getChildren().add(rootPanelElement);
+			((List<GuiEventListener>)this.children()).add(rootPanelElement);
 			setInitialFocus(rootPanelElement);
 		} else {
 			LOGGER.warn("No root panel found, keyboard navigation disabled");
@@ -161,12 +161,12 @@ public class CottonInventoryScreen<T extends SyncedGuiDescription> extends Abstr
 			clearPeers();
 			basePanel.validate(description);
 
-			imageWidth = basePanel.getWidth();
-			imageHeight = basePanel.getHeight();
-			
-			//DEBUG
-			if (imageWidth<16) imageWidth=300;
-			if (imageHeight<16) imageHeight=300;
+//			imageWidth = basePanel.getWidth();
+//			imageHeight = basePanel.getHeight();
+//
+//			//DEBUG
+//			if (imageWidth<16) imageWidth=300;
+//			if (imageHeight<16) imageHeight=300;
 		}
 
 		titleLabelX = description.getTitlePos().x();
@@ -276,8 +276,13 @@ public class CottonInventoryScreen<T extends SyncedGuiDescription> extends Abstr
 		return super.keyReleased(input);
 	}
 
+
 	@Override
-	protected void renderBg(GuiGraphics context, float partialTicks, int mouseX, int mouseY) {} //This is just an AbstractContainerScreen thing; most Screens don't work this way.
+	public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+		//This is just an AbstractContainerScreen thing; most Screens don't work this way.
+	}
+
+
 
 	/**
 	 * Paints the GUI description of this screen.
@@ -288,7 +293,7 @@ public class CottonInventoryScreen<T extends SyncedGuiDescription> extends Abstr
 	 * @param delta   the tick delta
 	 * @since 9.2.0
 	 */
-	public void paintDescription(GuiGraphics context, int mouseX, int mouseY, float delta) {
+	public void paintDescription(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
 		if (description!=null) {
 			WPanel root = description.getRootPanel();
 			if (root!=null) {
@@ -296,10 +301,11 @@ public class CottonInventoryScreen<T extends SyncedGuiDescription> extends Abstr
 			}
 		}
 	}
-	
+
 	@Override
-	public void render(GuiGraphics context, int mouseX, int mouseY, float partialTicks) {
-		super.render(context, mouseX, mouseY, partialTicks);
+	public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float partialTicks) {
+
+		super.extractRenderState(context, mouseX, mouseY, partialTicks);
 
 		if (description!=null) {
 			WPanel root = description.getRootPanel();
@@ -309,12 +315,13 @@ public class CottonInventoryScreen<T extends SyncedGuiDescription> extends Abstr
 			}
 		}
 		
-		renderTooltip(context, mouseX, mouseY); //Draws the itemstack tooltips
+		extractTooltip(context, mouseX, mouseY); //Draws the itemstack tooltips
 		VisualLogger.render(context);
 	}
 
+
 	@Override
-	protected void renderLabels(GuiGraphics context, int mouseX, int mouseY) {
+	public void extractLabels(GuiGraphicsExtractor context, int mouseX, int mouseY) {
 		if (description != null && description.isTitleVisible()) {
 			int width = description.getRootPanel().getWidth();
 			ScreenDrawing.drawString(context, getTitle().getVisualOrderText(), description.getTitleAlignment(), titleLabelX, titleLabelY, width - 2 * titleLabelX, description.getTitleColor());

@@ -5,7 +5,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import io.github.cottonmc.cotton.gui.client.ScreenDrawing;
@@ -52,7 +52,7 @@ public final class VisualLogger {
 	}
 
 	@Environment(EnvType.CLIENT)
-	public static void render(GuiGraphics context) {
+	public static void render(GuiGraphicsExtractor context) {
 		var client = Minecraft.getInstance();
 		var textRenderer = client.font;
 		int width = client.getWindow().getGuiScaledWidth();

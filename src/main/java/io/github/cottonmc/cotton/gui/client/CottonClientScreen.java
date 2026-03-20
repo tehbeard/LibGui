@@ -10,7 +10,7 @@ import io.github.cottonmc.cotton.gui.impl.mixin.client.ScreenAccessor;
 import io.github.cottonmc.cotton.gui.widget.WPanel;
 import io.github.cottonmc.cotton.gui.widget.WWidget;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
@@ -20,6 +20,8 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class CottonClientScreen extends Screen implements CottonScreenImpl {
 	private static final VisualLogger LOGGER = new VisualLogger(CottonInventoryScreen.class);
@@ -74,7 +76,7 @@ public class CottonClientScreen extends Screen implements CottonScreenImpl {
 
 		if (root != null) {
 			GuiEventListener rootPanelElement = FocusElements.ofPanel(root);
-			((ScreenAccessor) this).libgui$getChildren().add(rootPanelElement);
+			((List<GuiEventListener>)this.children()).add(rootPanelElement);
 			setInitialFocus(rootPanelElement);
 		} else {
 			LOGGER.warn("No root panel found, keyboard navigation disabled");
@@ -124,7 +126,7 @@ public class CottonClientScreen extends Screen implements CottonScreenImpl {
 		}
 	}
 
-	private void paint(GuiGraphics context, int mouseX, int mouseY, float delta) {
+	private void paint(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
 		if (description!=null) {
 			WPanel root = description.getRootPanel();
 			if (root!=null) {
@@ -139,8 +141,8 @@ public class CottonClientScreen extends Screen implements CottonScreenImpl {
 	}
 
 	@Override
-	public void render(GuiGraphics context, int mouseX, int mouseY, float partialTicks) {
-		super.render(context, mouseX, mouseY, partialTicks);
+	public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float partialTicks) {
+		super.extractRenderState(context, mouseX, mouseY, partialTicks);
 		paint(context, mouseX, mouseY, partialTicks);
 		
 		if (description!=null) {

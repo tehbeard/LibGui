@@ -1,7 +1,7 @@
 package io.github.cottonmc.cotton.gui.impl.mixin.client;
 
 import io.github.cottonmc.cotton.gui.client.CottonInventoryScreen;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,12 +14,12 @@ abstract class HandledScreenMixin {
 			method = "renderContents",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/client/gui/screens/Screen;render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V",
+					target = "Lnet/minecraft/client/gui/screens/Screen;render(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V",
 					shift = At.Shift.AFTER
 			),
 			allow = 1
 	)
-	private void onSuperRender(GuiGraphics context, int mouseX, int mouseY, float delta, CallbackInfo info) {
+	private void onSuperRender(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta, CallbackInfo info) {
 		if ((Object) this instanceof CottonInventoryScreen<?> cottonInventoryScreen) {
 			cottonInventoryScreen.paintDescription(context, mouseX, mouseY, delta);
 		}

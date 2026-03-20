@@ -2,7 +2,7 @@ package io.github.cottonmc.cotton.gui.widget;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import io.github.cottonmc.cotton.gui.client.ScreenDrawing;
 import io.github.cottonmc.cotton.gui.widget.data.Texture;
@@ -181,7 +181,7 @@ public class WSprite extends WWidget {
 
 	@Environment(EnvType.CLIENT)
 	@Override
-	public void paint(GuiGraphics context, int x, int y, int mouseX, int mouseY) {
+	public void paint(GuiGraphicsExtractor context, int x, int y, int mouseX, int mouseY) {
 		if (singleImage) {
 			paintFrame(context, x, y, frames[0]);
 		} else {
@@ -221,7 +221,7 @@ public class WSprite extends WWidget {
 	 * @param texture the texture to draw
 	 */
 	@Environment(EnvType.CLIENT)
-	protected void paintFrame(GuiGraphics context, int x, int y, Texture texture) {
+	protected void paintFrame(GuiGraphicsExtractor context, int x, int y, Texture texture) {
 		ScreenDrawing.texturedRect(context, x, y, getWidth(), getHeight(), texture, tint);
 	}
 }

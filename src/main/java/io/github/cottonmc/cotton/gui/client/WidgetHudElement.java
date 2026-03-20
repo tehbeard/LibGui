@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElement;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import com.mojang.blaze3d.platform.Window;
 import io.github.cottonmc.cotton.gui.widget.WWidget;
 import org.jetbrains.annotations.ApiStatus;
@@ -96,12 +96,11 @@ public record WidgetHudElement(WWidget widget, @Nullable Positioner positioner) 
 	}
 
 	@Override
-	public void render(GuiGraphics context, DeltaTracker tickCounter) {
+	public void extractRenderState(GuiGraphicsExtractor context, DeltaTracker deltaTracker) {
 		render(context, widget, positioner);
 	}
-
 	@ApiStatus.Internal
-	static void render(GuiGraphics context, WWidget widget, @Nullable Positioner positioner) {
+	static void render(GuiGraphicsExtractor context, WWidget widget, @Nullable Positioner positioner) {
 		Window window = Minecraft.getInstance().getWindow();
 		int hudWidth = window.getGuiScaledWidth();
 		int hudHeight = window.getGuiScaledHeight();
@@ -111,6 +110,8 @@ public record WidgetHudElement(WWidget widget, @Nullable Positioner positioner) 
 
 		widget.paint(context, widget.getX(), widget.getY(), -1, -1);
 	}
+
+
 
 	/**
 	 * Positioners can be used to change the position of a widget based on the window dimensions.
