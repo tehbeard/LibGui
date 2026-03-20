@@ -1,23 +1,22 @@
 package io.github.cottonmc.cotton.gui.impl.client;
 
-import net.minecraft.client.gui.screen.ButtonTextures;
-import net.minecraft.util.Identifier;
-
 import io.github.cottonmc.cotton.gui.impl.mixin.client.PressableWidgetAccessor;
 import io.github.cottonmc.cotton.gui.impl.mixin.client.SliderWidgetAccessor;
+import net.minecraft.client.gui.components.WidgetSprites;
+import net.minecraft.resources.Identifier;
 
 import static io.github.cottonmc.cotton.gui.impl.LibGuiCommon.id;
 
 public final class WidgetTextures {
-	private static final ButtonTextures LIGHT_LABELED_SLIDER_HANDLE = new ButtonTextures(
+	private static final WidgetSprites LIGHT_LABELED_SLIDER_HANDLE = new WidgetSprites(
 			SliderWidgetAccessor.libgui$getHandleTexture(),
 			SliderWidgetAccessor.libgui$getHandleHighlightedTexture()
 	);
-	private static final ButtonTextures DARK_LABELED_SLIDER_HANDLE = new ButtonTextures(
+	private static final WidgetSprites DARK_LABELED_SLIDER_HANDLE = new WidgetSprites(
 			id("widget/slider_handle_dark"),
 			id("widget/slider_handle_highlighted_dark")
 	);
-	private static final ButtonTextures DARK_BUTTON = new ButtonTextures(
+	private static final WidgetSprites DARK_BUTTON = new WidgetSprites(
 			id("widget/button_dark"),
 			id("widget/button_disabled_dark"),
 			id("widget/button_highlighted_dark")
@@ -35,11 +34,11 @@ public final class WidgetTextures {
 			id("widget/scroll_bar/thumb_hovered_dark")
 	);
 
-	public static ButtonTextures getButtonTextures(boolean dark) {
+	public static WidgetSprites getButtonTextures(boolean dark) {
 		return dark ? DARK_BUTTON : PressableWidgetAccessor.libgui$getTextures();
 	}
 
-	public static ButtonTextures getLabeledSliderHandleTextures(boolean dark) {
+	public static WidgetSprites getLabeledSliderHandleTextures(boolean dark) {
 		return dark ? DARK_LABELED_SLIDER_HANDLE : LIGHT_LABELED_SLIDER_HANDLE;
 	}
 

@@ -1,15 +1,5 @@
 package io.github.cottonmc.cotton.gui.client;
 
-import net.minecraft.client.gui.Click;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.Element;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
-import net.minecraft.client.input.CharInput;
-import net.minecraft.client.input.KeyInput;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.Text;
-
 import io.github.cottonmc.cotton.gui.GuiDescription;
 import io.github.cottonmc.cotton.gui.impl.VisualLogger;
 import io.github.cottonmc.cotton.gui.impl.client.CottonScreenImpl;
@@ -20,6 +10,15 @@ import io.github.cottonmc.cotton.gui.impl.mixin.client.ScreenAccessor;
 import io.github.cottonmc.cotton.gui.widget.WPanel;
 import io.github.cottonmc.cotton.gui.widget.WWidget;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.CharacterEvent;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
 
 public class CottonClientScreen extends Screen implements CottonScreenImpl {
@@ -50,10 +49,10 @@ public class CottonClientScreen extends Screen implements CottonScreenImpl {
 	private final MouseInputHandler<CottonClientScreen> mouseInputHandler = new MouseInputHandler<>(this);
 
 	public CottonClientScreen(GuiDescription description) {
-		this(ScreenTexts.EMPTY, description);
+		this(CommonComponents.EMPTY, description);
 	}
 
-	public CottonClientScreen(Text title, GuiDescription description) {
+	public CottonClientScreen(Component title, GuiDescription description) {
 		super(title);
 		this.description = description;
 		description.getRootPanel().validate(description);
@@ -74,7 +73,7 @@ public class CottonClientScreen extends Screen implements CottonScreenImpl {
 		reposition(width, height);
 
 		if (root != null) {
-			Element rootPanelElement = FocusElements.ofPanel(root);
+			GuiEventListener rootPanelElement = FocusElements.ofPanel(root);
 			((ScreenAccessor) this).libgui$getChildren().add(rootPanelElement);
 			setInitialFocus(rootPanelElement);
 		} else {
@@ -125,7 +124,7 @@ public class CottonClientScreen extends Screen implements CottonScreenImpl {
 		}
 	}
 
-	private void paint(DrawContext context, int mouseX, int mouseY, float delta) {
+	private void paint(GuiGraphics context, int mouseX, int mouseY, float delta) {
 		if (description!=null) {
 			WPanel root = description.getRootPanel();
 			if (root!=null) {
@@ -134,13 +133,13 @@ public class CottonClientScreen extends Screen implements CottonScreenImpl {
 
 			if (getTitle() != null && description.isTitleVisible()) {
 				int width = description.getRootPanel().getWidth();
-				ScreenDrawing.drawString(context, getTitle().asOrderedText(), description.getTitleAlignment(), left + titleX, top + titleY, width - 2 * titleX, description.getTitleColor());
+				ScreenDrawing.drawString(context, getTitle().getVisualOrderText(), description.getTitleAlignment(), left + titleX, top + titleY, width - 2 * titleX, description.getTitleColor());
 			}
 		}
 	}
 
 	@Override
-	public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
+	public void render(GuiGraphics context, int mouseX, int mouseY, float partialTicks) {
 		super.render(context, mouseX, mouseY, partialTicks);
 		paint(context, mouseX, mouseY, partialTicks);
 		
@@ -167,7 +166,7 @@ public class CottonClientScreen extends Screen implements CottonScreenImpl {
 	}
 
 	@Override
-	public boolean mouseClicked(Click click, boolean doubled) {
+	public boolean mouseClicked(MouseButtonEvent click, boolean doubled) {
 		super.mouseClicked(click, doubled);
 
 		int containerX = (int) click.x() - left;
@@ -180,7 +179,7 @@ public class CottonClientScreen extends Screen implements CottonScreenImpl {
 	}
 
 	@Override
-	public boolean mouseReleased(Click click) {
+	public boolean mouseReleased(MouseButtonEvent click) {
 		super.mouseReleased(click);
 
 		int containerX = (int) click.x() - left;
@@ -191,7 +190,7 @@ public class CottonClientScreen extends Screen implements CottonScreenImpl {
 	}
 
 	@Override
-	public boolean mouseDragged(Click click, double offsetX, double offsetY) {
+	public boolean mouseDragged(MouseButtonEvent click, double offsetX, double offsetY) {
 		super.mouseDragged(click, offsetX, offsetY);
 
 		int containerX = (int) click.x() - left;
@@ -222,7 +221,7 @@ public class CottonClientScreen extends Screen implements CottonScreenImpl {
 	}
 
 	@Override
-	public boolean charTyped(CharInput input) {
+	public boolean charTyped(CharacterEvent input) {
 		WWidget focus = description.getFocus();
 		if (focus != null && focus.onCharTyped(input) == InputResult.PROCESSED) {
 			return true;
@@ -232,7 +231,7 @@ public class CottonClientScreen extends Screen implements CottonScreenImpl {
 	}
 
 	@Override
-	public boolean keyPressed(KeyInput input) {
+	public boolean keyPressed(KeyEvent input) {
 		WWidget focus = description.getFocus();
 		if (focus != null && focus.onKeyPressed(input) == InputResult.PROCESSED) {
 			return true;
@@ -242,7 +241,7 @@ public class CottonClientScreen extends Screen implements CottonScreenImpl {
 	}
 
 	@Override
-	public boolean keyReleased(KeyInput input) {
+	public boolean keyReleased(KeyEvent input) {
 		WWidget focus = description.getFocus();
 		if (focus != null && focus.onKeyReleased(input) == InputResult.PROCESSED) {
 			return true;
@@ -252,7 +251,7 @@ public class CottonClientScreen extends Screen implements CottonScreenImpl {
 	}
 
 	@Override
-	protected void addElementNarrations(NarrationMessageBuilder builder) {
+	protected void updateNarratedWidget(NarrationElementOutput builder) {
 		if (description != null) NarrationHelper.addNarrations(description.getRootPanel(), builder);
 	}
 }

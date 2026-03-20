@@ -1,19 +1,18 @@
 package io.github.cottonmc.cotton.gui.impl.client;
 
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.util.Identifier;
-
 import io.github.cottonmc.cotton.gui.client.ScreenDrawing;
 import juuxel.libninepatch.ContextualTextureRenderer;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.Identifier;
 
 /**
  * An implementation of LibNinePatch's {@link ContextualTextureRenderer} for identifiers.
  */
-public enum NinePatchTextureRendererImpl implements ContextualTextureRenderer<Identifier, DrawContext> {
+public enum NinePatchTextureRendererImpl implements ContextualTextureRenderer<Identifier, GuiGraphics> {
 	INSTANCE;
 
 	@Override
-	public void draw(Identifier texture, DrawContext context, int x, int y, int width, int height, float u1, float v1, float u2, float v2) {
+	public void draw(Identifier texture, GuiGraphics context, int x, int y, int width, int height, float u1, float v1, float u2, float v2) {
 		ScreenDrawing.texturedRect(context, x, y, width, height, texture, u1, v1, u2, v2, 0xFF_FFFFFF);
 	}
 

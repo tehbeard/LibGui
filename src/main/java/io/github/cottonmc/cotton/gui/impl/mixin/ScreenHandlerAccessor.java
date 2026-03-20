@@ -1,12 +1,11 @@
 package io.github.cottonmc.cotton.gui.impl.mixin;
 
-import net.minecraft.screen.ScreenHandler;
-
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(ScreenHandler.class)
+@Mixin(AbstractContainerMenu.class)
 public interface ScreenHandlerAccessor {
-	@Accessor("disableSync")
+	@Accessor("suppressRemoteUpdates")
 	boolean libgui$getDisableSync();
 }
