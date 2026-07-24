@@ -1,5 +1,6 @@
 package io.github.cottonmc.cotton.gui.widget;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -18,7 +19,6 @@ import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import io.github.cottonmc.cotton.gui.widget.data.ObservableProperty;
 import io.github.cottonmc.cotton.gui.widget.focus.FocusModel;
 import org.jspecify.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 /**
  * The base class for all widgets.
@@ -588,7 +588,7 @@ public class WWidget {
 	 */
 	@Environment(EnvType.CLIENT)
 	public static boolean isActivationKey(int ch) {
-		return ch == GLFW.GLFW_KEY_ENTER || ch == GLFW.GLFW_KEY_KP_ENTER || ch == GLFW.GLFW_KEY_SPACE;
+		return ch == InputConstants.KEY_RETURN || ch == InputConstants.KEY_NUMPADENTER || ch == InputConstants.KEY_SPACE;
 	}
 
 	/**

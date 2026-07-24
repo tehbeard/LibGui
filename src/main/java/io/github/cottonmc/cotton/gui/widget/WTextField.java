@@ -1,5 +1,6 @@
 package io.github.cottonmc.cotton.gui.widget;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -21,7 +22,6 @@ import io.github.cottonmc.cotton.gui.impl.client.NarrationMessages;
 import io.github.cottonmc.cotton.gui.impl.mixin.client.EditBoxAccessor;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import org.jspecify.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -468,17 +468,17 @@ public class WTextField extends WWidget {
 		}
 
 		switch (input.key()) {
-			case GLFW.GLFW_KEY_DELETE -> delete(input, false);
-			case GLFW.GLFW_KEY_BACKSPACE -> delete(input, true);
-			case GLFW.GLFW_KEY_LEFT -> onDirectionalKey(-1, input);
-			case GLFW.GLFW_KEY_RIGHT -> onDirectionalKey(1, input);
-			case GLFW.GLFW_KEY_HOME, GLFW.GLFW_KEY_UP -> {
+			case InputConstants.KEY_DELETE -> delete(input, false);
+			case InputConstants.KEY_BACKSPACE -> delete(input, true);
+			case InputConstants.KEY_LEFT -> onDirectionalKey(-1, input);
+			case InputConstants.KEY_RIGHT -> onDirectionalKey(1, input);
+			case InputConstants.KEY_HOME, InputConstants.KEY_UP -> {
 				if (input.hasShiftDown()) {
 					select = -1;
 				}
 				cursor = 0;
 			}
-			case GLFW.GLFW_KEY_END, GLFW.GLFW_KEY_DOWN -> {
+			case InputConstants.KEY_END, InputConstants.KEY_DOWN -> {
 				if (input.hasShiftDown()) {
 					select = -1;
 				}

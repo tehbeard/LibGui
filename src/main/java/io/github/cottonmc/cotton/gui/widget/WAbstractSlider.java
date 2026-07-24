@@ -1,5 +1,6 @@
 package io.github.cottonmc.cotton.gui.widget;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.narration.NarratedElementType;
@@ -13,7 +14,6 @@ import io.github.cottonmc.cotton.gui.impl.client.NarrationMessages;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import org.jspecify.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.function.IntConsumer;
 
@@ -386,8 +386,8 @@ public abstract class WAbstractSlider extends WWidget {
 	 */
 	public static boolean isDecreasingKey(int ch, Direction direction) {
 		return direction.isInverted()
-				? (ch == GLFW.GLFW_KEY_RIGHT || ch == GLFW.GLFW_KEY_UP)
-				: (ch == GLFW.GLFW_KEY_LEFT || ch == GLFW.GLFW_KEY_DOWN);
+				? (ch == InputConstants.KEY_RIGHT || ch == InputConstants.KEY_UP)
+				: (ch == InputConstants.KEY_LEFT || ch == InputConstants.KEY_DOWN);
 	}
 
 	/**
@@ -400,8 +400,8 @@ public abstract class WAbstractSlider extends WWidget {
 	 */
 	public static boolean isIncreasingKey(int ch, Direction direction) {
 		return direction.isInverted()
-				? (ch == GLFW.GLFW_KEY_LEFT || ch == GLFW.GLFW_KEY_DOWN)
-				: (ch == GLFW.GLFW_KEY_RIGHT || ch == GLFW.GLFW_KEY_UP);
+				? (ch == InputConstants.KEY_LEFT || ch == InputConstants.KEY_DOWN)
+				: (ch == InputConstants.KEY_RIGHT || ch == InputConstants.KEY_UP);
 	}
 
 	/**

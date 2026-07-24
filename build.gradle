@@ -79,10 +79,10 @@ dependencies {
 
 	include api("io.github.juuxel:libninepatch:${project.libninepatch_version}")
 
-	compileOnly("com.terraformersmc:modmenu:$project.modmenu_version") {
-		exclude group: 'net.fabricmc.fabric-api'
-		exclude group: 'net.fabricmc', module: 'fabric-loader'
-	}
+//	compileOnly("com.terraformersmc:modmenu:$project.modmenu_version") {
+//		exclude group: 'net.fabricmc.fabric-api'
+//		exclude group: 'net.fabricmc', module: 'fabric-loader'
+//	}
 
 	// Test mod dependencies
 	testModImplementation sourceSets.main.output
@@ -175,14 +175,17 @@ publishing {
 
 	// select the repositories you want to publish to
 	repositories {
-		def env = System.getenv()
-		if (env.MAVEN_URL) {
-			maven {
-				url = env.MAVEN_URL
-				credentials {
-					username = env.MAVEN_USERNAME
-					password = env.MAVEN_PASSWORD
-				}
+		maven {
+			name = "Forgejo"
+			url = uri("https://forgejo.local.tehbeard.com/api/packages/tehbeard/maven")
+
+			credentials(HttpHeaderCredentials) {
+				name = "Authorization"
+				value = "token " + (System.getenv('ARTIFACTORY_API_KEY') ?: project.findProperty('artifactoryApiKey'))
+			}
+
+			authentication {
+				header(HttpHeaderAuthentication)
 			}
 		}
 	}

@@ -4,9 +4,9 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
 
-import blue.endless.jankson.Jankson;
-import blue.endless.jankson.JsonElement;
-import blue.endless.jankson.JsonObject;
+//import blue.endless.jankson.Jankson;
+//import blue.endless.jankson.JsonElement;
+//import blue.endless.jankson.JsonObject;
 import io.github.cottonmc.cotton.gui.impl.Proxy;
 import io.github.cottonmc.cotton.gui.impl.ScreenNetworkingImpl;
 import io.github.cottonmc.jankson.JanksonFactory;
@@ -22,7 +22,7 @@ public class LibGuiClient implements ClientModInitializer {
 	public static final Logger logger = LogManager.getLogger();
 	public static volatile LibGuiConfig config;
 
-	public static final Jankson jankson = JanksonFactory.createJankson();
+//	public static final Jankson jankson = JanksonFactory.createJankson();
 
 	@Override
 	public void onInitializeClient() {
@@ -41,12 +41,14 @@ public class LibGuiClient implements ClientModInitializer {
 			
 			if (Files.notExists(file)) saveConfig(new LibGuiConfig());
 			
-			JsonObject json;
-			try (InputStream in = Files.newInputStream(file)) {
-				json = jankson.load(in);
-			}
+//			JsonObject json;
+//			try (InputStream in = Files.newInputStream(file)) {
+//				json = jankson.load(in);
+//			}
 
-			config =  jankson.fromJson(json, LibGuiConfig.class);
+			config = new LibGuiConfig();
+			config.darkMode = true;
+//			config =  jankson.fromJson(json, LibGuiConfig.class);
 			
 			/*
 			JsonElement jsonElementNew = jankson.toJson(new LibGuiConfig());
@@ -64,11 +66,11 @@ public class LibGuiClient implements ClientModInitializer {
 
 	public static void saveConfig(LibGuiConfig config) {
 		try {
-			Path file = FabricLoader.getInstance().getConfigDir().resolve("libgui.json5");
+//			Path file = FabricLoader.getInstance().getConfigDir().resolve("libgui.json5");
 			
-			JsonElement json = jankson.toJson(config);
-			String result = json.toJson(true, true);
-			Files.write(file, result.getBytes(StandardCharsets.UTF_8));
+//			JsonElement json = jankson.toJson(config);
+//			String result = json.toJson(true, true);
+//			Files.write(file, result.getBytes(StandardCharsets.UTF_8));
 		} catch (Exception e) {
 			logger.error("[LibGui] Error saving config: {}", e.getMessage());
 		}
