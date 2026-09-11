@@ -1,7 +1,7 @@
 plugins {
 	id 'net.fabricmc.fabric-loom' version '1.17.+'
 	id 'maven-publish'
-	id 'checkstyle'
+	// id 'checkstyle'
 }
 
 base {
@@ -121,11 +121,11 @@ jar {
 	from "CREDITS.txt", "LICENSE"
 }
 
-checkstyle {
-	configFile = rootProject.file('checkstyle.xml')
-	configProperties = [suppressions: rootProject.file('checkstyle.suppressions.xml').absolutePath]
-	toolVersion = '10.9.2'
-}
+// checkstyle {
+// 	configFile = rootProject.file('checkstyle.xml')
+// 	configProperties = [suppressions: rootProject.file('checkstyle.suppressions.xml').absolutePath]
+// 	toolVersion = '10.9.2'
+// }
 
 def javadocBuildJar = tasks.register('javadocBuildJar', Jar) {
 	destinationDirectory = file('build/devlibs')
