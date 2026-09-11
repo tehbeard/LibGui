@@ -153,6 +153,7 @@ publishing {
 	publications {
 		maven(MavenPublication) {
 			from components.java
+			artifactId = "libgui"
 			pom {
 				name = "LibGui"
 				description = "Minecraft GUI Library"
