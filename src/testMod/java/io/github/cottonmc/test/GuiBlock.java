@@ -32,7 +32,6 @@ public class GuiBlock extends BaseEntityBlock {
 		return RenderShape.MODEL;
 	}
 
-	@Override
 	protected MapCodec<? extends BaseEntityBlock> codec() {
 		return null;
 	}

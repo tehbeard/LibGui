@@ -15,7 +15,6 @@ import io.github.cottonmc.cotton.gui.client.CottonClientScreen;
 import io.github.cottonmc.cotton.gui.client.CottonInventoryScreen;
 import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
 import io.github.cottonmc.cotton.gui.client.WidgetHudElement;
-import io.github.cottonmc.cotton.gui.impl.modmenu.ConfigGui;
 import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.test.LibGuiTest;
 import io.github.cottonmc.test.ReallySimpleDescription;
@@ -54,8 +53,6 @@ public class LibGuiTestClient implements ClientModInitializer {
 
 		ClientCommandRegistrationCallback.EVENT.register((dispatcher, commandRegistryAccess) -> dispatcher.register(
 				literal("libgui")
-						.then(literal("config").executes(openScreen(client -> new ConfigGui(client.gui.screen()))))
-						.then(literal("tab").executes(openScreen(client -> new TabTestGui())))
 						.then(literal("scrolling").executes(openScreen(client -> new ScrollingTestGui())))
 						.then(literal("scrollbar").executes(openScreen(client -> new ScrollBarTestGui())))
 						.then(literal("insets").executes(openScreen(client -> new InsetsTestGui())))
