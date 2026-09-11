@@ -190,7 +190,7 @@ publishing {
 		}
 		maven {
 			name = "GitHubPackages"
-			url = uri("https://maven.pkg.github.com/CottonMC/LibGui")
+			url = uri("https://maven.pkg.github.com/tehbeard/LibGui")
 			credentials {
 				username = System.getenv("GITHUB_ACTOR")
 				password = System.getenv("GITHUB_TOKEN")
