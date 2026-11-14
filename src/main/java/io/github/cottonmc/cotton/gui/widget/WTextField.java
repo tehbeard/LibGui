@@ -13,7 +13,7 @@ import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.PreeditEvent;
-import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.gui.GuiPipeline;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
@@ -120,7 +120,7 @@ public class WTextField extends WWidget {
 	}
 
 	private int clampCursor(int cursor) {
-		return Mth.clamp(cursor, 0, text.length());
+		return Math.min(Math.max(cursor, 0), text.length());
 	}
 
 	public void setCursorPos(int location) {
@@ -182,7 +182,7 @@ public class WTextField extends WWidget {
 	@Environment(EnvType.CLIENT)
 	protected void renderBox(GuiGraphicsExtractor context, int x, int y) {
 		var texture = EditBoxAccessor.libgui$getTextures().get(isEditable(), isFocused());
-		context.blitSprite(RenderPipelines.GUI_TEXTURED, texture, x - 1, y - 1, width + 2, height + 2);
+		context.blitSprite(GuiPipeline.TEXTURED, texture, x - 1, y - 1, width + 2, height + 2);
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -258,7 +258,7 @@ public class WTextField extends WWidget {
 
 	@Environment(EnvType.CLIENT)
 	private void drawHighlight(GuiGraphicsExtractor context, int x, int y, int width, int height) {
-		context.fill(RenderPipelines.GUI_TEXT_HIGHLIGHT, x, y, x + width, y + height, 0xFF_0000FF);
+		context.fill(GuiPipeline.TEXT_HIGHLIGHT, x, y, x + width, y + height, 0xFF_0000FF);
 	}
 
 	public WTextField setTextPredicate(Predicate<String> predicate_1) {

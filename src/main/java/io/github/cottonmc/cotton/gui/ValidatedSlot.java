@@ -30,7 +30,7 @@ public class ValidatedSlot extends Slot {
 	private boolean visible = true;
 
 	public ValidatedSlot(Container inventory, int index, int x, int y) {
-		super(inventory, index, x, y);
+		super(inventory, index, x, y, Section.INVENTORY);
 		Objects.requireNonNull(inventory, "Can't make an itemslot from a null inventory!");
 		this.slotNumber = index;
 	}

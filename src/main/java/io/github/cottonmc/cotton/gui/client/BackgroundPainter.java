@@ -1,7 +1,7 @@
 package io.github.cottonmc.cotton.gui.client;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.gui.GuiPipeline;
 import net.minecraft.resources.Identifier;
 
 import io.github.cottonmc.cotton.gui.impl.LibGuiCommon;
@@ -180,6 +180,6 @@ public interface BackgroundPainter {
 	 */
 	static BackgroundPainter createGuiSprite(Identifier texture) {
 		Objects.requireNonNull(texture, "Texture cannot be null");
-		return (context, left, top, panel) -> context.blitSprite(RenderPipelines.GUI_TEXTURED, texture, left, top, panel.getWidth(), panel.getHeight());
+		return (context, left, top, panel) -> context.blitSprite(GuiPipeline.TEXTURED, texture, left, top, panel.getWidth(), panel.getHeight());
 	}
 }

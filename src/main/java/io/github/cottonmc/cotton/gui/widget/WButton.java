@@ -10,7 +10,7 @@ import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
-import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.gui.GuiPipeline;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -95,7 +95,7 @@ public class WButton extends WWidget {
 	public void paint(GuiGraphicsExtractor context, int x, int y, int mouseX, int mouseY) {
 		boolean hovered = isWithinBounds(mouseX, mouseY);
 		WidgetSprites textures = WidgetTextures.getButtonTextures(shouldRenderInDarkMode());
-		context.blitSprite(RenderPipelines.GUI_TEXTURED, textures.get(enabled, hovered || isFocused()), x, y, getWidth(), getHeight());
+		context.blitSprite(GuiPipeline.TEXTURED, textures.get(enabled, hovered || isFocused()), x, y, getWidth(), getHeight());
 
 		if (icon != null) {
 			icon.paint(context, x+ICON_SPACING, y+(getHeight()-iconSize)/2, iconSize);

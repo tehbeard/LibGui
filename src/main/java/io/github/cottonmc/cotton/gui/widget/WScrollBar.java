@@ -7,7 +7,7 @@ import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
-import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.gui.GuiPipeline;
 import net.minecraft.resources.Identifier;
 
 import io.github.cottonmc.cotton.gui.impl.LibGuiCommon;
@@ -58,7 +58,7 @@ public class WScrollBar extends WWidget {
 		boolean darkMode = shouldRenderInDarkMode();
 		var textures = WidgetTextures.getScrollBarTextures(darkMode);
 
-		context.blitSprite(RenderPipelines.GUI_TEXTURED, textures.background(), x, y, getWidth(), getHeight());
+		context.blitSprite(GuiPipeline.TEXTURED, textures.background(), x, y, getWidth(), getHeight());
 
 		Identifier thumbTexture = textures.thumb();
 
@@ -74,17 +74,17 @@ public class WScrollBar extends WWidget {
 
 		if (axis == Axis.HORIZONTAL) {
 			matrices.translate(x + 1 + getHandlePosition(), y + 1);
-			context.blitSprite(RenderPipelines.GUI_TEXTURED, thumbTexture, 0, 0, getHandleSize(), getHeight() - 2);
+			context.blitSprite(GuiPipeline.TEXTURED, thumbTexture, 0, 0, getHandleSize(), getHeight() - 2);
 
 			if (isFocused()) {
-				context.blitSprite(RenderPipelines.GUI_TEXTURED, FOCUS_TEXTURE, 0, 0, getHandleSize(), getHeight() - 2);
+				context.blitSprite(GuiPipeline.TEXTURED, FOCUS_TEXTURE, 0, 0, getHandleSize(), getHeight() - 2);
 			}
 		} else {
 			matrices.translate(x + 1, y + 1 + getHandlePosition());
-			context.blitSprite(RenderPipelines.GUI_TEXTURED, thumbTexture, 0, 0, getWidth() - 2, getHandleSize());
+			context.blitSprite(GuiPipeline.TEXTURED, thumbTexture, 0, 0, getWidth() - 2, getHandleSize());
 
 			if (isFocused()) {
-				context.blitSprite(RenderPipelines.GUI_TEXTURED, FOCUS_TEXTURE, 0, 0, getWidth() - 2, getHandleSize());
+				context.blitSprite(GuiPipeline.TEXTURED, FOCUS_TEXTURE, 0, 0, getWidth() - 2, getHandleSize());
 			}
 		}
 

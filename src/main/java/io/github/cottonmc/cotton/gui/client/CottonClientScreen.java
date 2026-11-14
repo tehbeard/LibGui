@@ -134,8 +134,11 @@ public class CottonClientScreen extends Screen implements CottonScreenImpl {
 	}
 
 	@Override
-	public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-		super.extractRenderState(graphics, mouseX, mouseY, a);
+	public void extractRenderState(GuiGraphicsExtractor graphics) {
+		super.extractRenderState(graphics);
+		var mouseX = graphics.mouseX();
+		var mouseY = graphics.mouseY();
+		var a = graphics.deltaTracker().getRealtimeDeltaTicks();
 		paint(graphics, mouseX, mouseY, a);
 		
 		WPanel root = description.getRootPanel();

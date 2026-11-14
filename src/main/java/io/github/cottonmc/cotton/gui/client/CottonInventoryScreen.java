@@ -299,28 +299,30 @@ public class CottonInventoryScreen<T extends SyncedGuiDescription> extends Abstr
 	}
 
 	@Override
-	public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-		super.extractRenderState(graphics, mouseX, mouseY, a);
+	public void extractRenderState(GuiGraphicsExtractor graphics) {
+		super.extractRenderState(graphics);
 		VisualLogger.render(graphics);
 	}
 
-	@Override
-	protected void extractTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
-		super.extractTooltip(graphics, mouseX, mouseY);
-		WPanel root = description.getRootPanel();
-		WWidget hitChild = root.hit(mouseX- leftPos, mouseY- topPos);
-		if (hitChild!=null) hitChild.renderTooltip(graphics, leftPos, topPos, mouseX- leftPos, mouseY- topPos);
-	}
+//	@Override
+//	protected void extractTooltip(GuiGraphicsExtractor graphics) {
+//		var mouseX = graphics.mouseX();
+//		var mouseY = graphics.mouseY();
+//		super.extractTooltip(graphics);
+//		WPanel root = description.getRootPanel();
+//		WWidget hitChild = root.hit(mouseX- leftPos, mouseY- topPos);
+//		if (hitChild!=null) hitChild.renderTooltip(graphics, leftPos, topPos, mouseX- leftPos, mouseY- topPos);
+//	}
 
-	@Override
-	protected void extractLabels(GuiGraphicsExtractor context, int mouseX, int mouseY) {
-		if (description.isTitleVisible()) {
-			int width = description.getRootPanel().getWidth();
-			ScreenDrawing.drawString(context, getTitle().getVisualOrderText(), description.getTitleAlignment(), titleLabelX, titleLabelY, width - 2 * titleLabelX, description.getTitleColor());
-		}
-
-		// Don't draw the player inventory label as it's drawn by the widget itself
-	}
+//	@Override
+//	protected void extractLabels(GuiGraphicsExtractor context, int mouseX, int mouseY) {
+//		if (description.isTitleVisible()) {
+//			int width = description.getRootPanel().getWidth();
+//			ScreenDrawing.drawString(context, getTitle().getVisualOrderText(), description.getTitleAlignment(), titleLabelX, titleLabelY, width - 2 * titleLabelX, description.getTitleColor());
+//		}
+//
+//		// Don't draw the player inventory label as it's drawn by the widget itself
+//	}
 
 	@Override
 	protected void containerTick() {

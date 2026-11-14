@@ -2,7 +2,7 @@ package io.github.cottonmc.cotton.gui.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.gui.GuiPipeline;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
@@ -108,7 +108,7 @@ public class ScreenDrawing {
 			case GUI_SPRITE -> {
 				outer: if (texture.u1() == 0 && texture.u2() == 1 && texture.v1() == 0 && texture.v2() == 1) {
 					// If we're drawing the full texture, just let vanilla do it.
-					context.blitSprite(RenderPipelines.GUI_TEXTURED, texture.image(), x, y, width, height, color);
+					context.blitSprite(GuiPipeline.TEXTURED, texture.image(), x, y, width, height, color);
 				} else {
 					// If we're only drawing a region, draw the full texture in a larger size and clip it
 					// to only show the requested region.
@@ -132,7 +132,7 @@ public class ScreenDrawing {
 					matrices.scale(fullWidth / width, fullHeight / height);
 
 					// Draw the texture using vanilla code.
-					context.blitSprite(RenderPipelines.GUI_TEXTURED, texture.image(), 0, 0, width, height, color);
+					context.blitSprite(GuiPipeline.TEXTURED, texture.image(), 0, 0, width, height, color);
 
 					context.disableScissor();
 					matrices.popMatrix();
@@ -166,7 +166,7 @@ public class ScreenDrawing {
 		int y2 = y + height;
 		float a = (color >> 24 & 255) / 255.0F;
 		color = colorAtOpacity(color, a * opacity);
-		((GuiGraphicsExtractorAccessor) context).libgui$callInnerBlit(RenderPipelines.GUI_TEXTURED, texture, x, x2, y, y2, u1, u2, v1, v2, color);
+		((GuiGraphicsExtractorAccessor) context).libgui$callInnerBlit(GuiPipeline.TEXTURED, texture, x, x2, y, y2, u1, u2, v1, v2, color);
 	}
 
 	/**

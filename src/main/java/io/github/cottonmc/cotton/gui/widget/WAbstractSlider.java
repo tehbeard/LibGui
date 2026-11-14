@@ -171,7 +171,7 @@ public abstract class WAbstractSlider extends WWidget {
 		int pos = axisPos - getThumbWidth() / 2;
 		int rawValue = min + Math.round(valueToCoordRatio * pos);
 		int previousValue = value;
-		value = Mth.clamp(rawValue, min, max);
+		value = Math.min(max, Math.max(rawValue, min));
 		if (value != previousValue) onValueChanged(value);
 	}
 
@@ -191,7 +191,7 @@ public abstract class WAbstractSlider extends WWidget {
 		}
 
 		int previous = value;
-		value = Mth.clamp(value + (int) Math.signum(verticalAmount) * Mth.ceil(valueToCoordRatio * Math.abs(verticalAmount) * 2), min, max);
+		value = Math.max(min, Math.min(max, value + (int) Math.signum(verticalAmount) * Mth.ceil(valueToCoordRatio * Math.abs(verticalAmount) * 2) ));
 
 		if (previous != value) {
 			onValueChanged(value);
@@ -235,7 +235,7 @@ public abstract class WAbstractSlider extends WWidget {
 	 */
 	public void setValue(int value, boolean callListeners) {
 		int previous = this.value;
-		this.value = Mth.clamp(value, min, max);
+		this.value = Math.min(Math.max(value, min), max);
 		if (callListeners && previous != this.value) {
 			onValueChanged(this.value);
 			if (draggingFinishedListener != null) draggingFinishedListener.accept(value);
